@@ -34,7 +34,9 @@ namespace NoteTaker
 
         private void loadButton_Click(object sender, EventArgs e)
         {
-
+            titleBox.Text = notes.Rows[previousNotes.CurrentCell.RowIndex].ItemArray[0].ToString();
+            noteBox.Text = notes.Rows[previousNotes.CurrentCell.RowIndex].ItemArray[1].ToString();
+            editing = true;
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -55,7 +57,25 @@ namespace NoteTaker
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (editing)
+            {
+                notes.Rows[previousNotes.CurrentCell.RowIndex]["Title"] = titleBox.Text;
+                notes.Rows[previousNotes.CurrentCell.RowIndex]["Note"] = noteBox.Text;
+            }
+            else
+            {
+                notes.Rows.Add(titleBox.Text, noteBox.Text);
+            }
+            titleBox.Text = "";
+            noteBox.Text = "";
+            editing = false;
+        }
 
+        private void previousNotes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            titleBox.Text = notes.Rows[previousNotes.CurrentCell.RowIndex].ItemArray[0].ToString();
+            noteBox.Text = notes.Rows[previousNotes.CurrentCell.RowIndex].ItemArray[1].ToString();
+            editing = true;
         }
     }
 }
